@@ -15,6 +15,8 @@ namespace UI
         {
             InitializeComponent();
             fileDialog.FileOk += FileDialog_FileOk;
+            fileDialog.CheckFileExists = true;
+            fileDialog.CheckPathExists = true;
         }
 
         private void FileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
@@ -30,8 +32,15 @@ namespace UI
 
         private void btnConvert_Click(object sender, RoutedEventArgs e)
         {
-            string text = converter.ConvertToXmlWithBase64(fileDialog.FileName);
-            txtXml.Text = text;
+            if (!string.IsNullOrEmpty(fileDialog.FileName))
+            {
+                string text = converter.ConvertToXmlWithBase64(fileDialog.FileName);
+                txtXml.Text = text;
+            }
+            else
+            {
+                MessageBox.Show("Please select a file to convert.");
+            }
         }
 
         private void btnCopyToClipboard_Click(object sender, RoutedEventArgs e)
